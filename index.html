@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<link href='assets/main.css' rel='stylesheet' />
+<script src='assets/main.js'></script>
+<script src='assets/locales-all.js'></script>
+<script>
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var initialLocaleCode = 'en';
+    var localeSelectorEl = document.getElementById('locale-selector');
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+      },
+      initialDate: '2020-11-01',
+      locale: initialLocaleCode,
+      buttonIcons: false,
+      weekNumbers: true,
+      navLinks: true,
+      editable: true,
+      dayMaxEvents: true,
+      events: [
+        {
+          title: 'All Day Event',
+          start: '2020-11-01',
+          color: '#C2185B'
+        },
+        {
+          title: 'Long Event',
+          start: '2020-11-01T09:00:00',
+          end: '2020-11-01T11:00:00',
+          color: '#8E74C8'
+        },
+        {
+          title: 'Long Event',
+          start: '2020-11-01T12:00:00',
+          end: '2020-11-01T12:50:00',
+          color: '#7CB77E'
+        },
+        {
+          title: 'Long Event',
+          start: '2020-11-01T15:00:00',
+          end: '2020-11-01T17:50:00',
+          color: '#F18965'
+        },
+        {
+          title: 'Long Event',
+          start: '2020-11-02T07:00:00',
+          end: '2020-11-02T09:00:00',
+          color: '#56B1E3'
+        },
+        {
+          title: 'Long Event',
+          start: '2020-11-03T14:00:00',
+          end: '2020-11-03T16:50:00',
+          color: '#FFC24F'
+        },
+        {
+          title: 'Long Event',
+          start: '2020-11-04T13:00:00',
+          end: '2020-11-04T14:50:00',
+          color: 'green'
+        },
+        {
+          title: 'Long Event',
+          start: '2020-11-05T03:00:00',
+          end: '2020-11-05T04:50:00',
+          color: 'red'
+        },
+        {
+          title: 'Long Event',
+          start: '2020-11-05T06:00:00',
+          end: '2020-11-05T08:50:00',
+          color: 'gray'
+        }
+      ]
+    });
+
+    calendar.render();
+
+    // build the locale selector's options
+    calendar.getAvailableLocaleCodes().forEach(function(localeCode) {
+      var optionEl = document.createElement('option');
+      optionEl.value = localeCode;
+      optionEl.selected = localeCode == initialLocaleCode;
+      optionEl.innerText = localeCode;
+      localeSelectorEl.appendChild(optionEl);
+    });
+
+    // when the selected option changes, dynamically change the calendar option
+    localeSelectorEl.addEventListener('change', function() {
+      if (this.value) {
+        calendar.setOption('locale', this.value);
+      }
+    });
+
+  });
+
+</script>
+<style>
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+
+  #top {
+    background: #eee;
+    border-bottom: 1px solid #ddd;
+    padding: 0 10px;
+    line-height: 40px;
+    font-size: 12px;
+  }
+
+  #calendar {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 10px;
+  }
+
+</style>
+</head>
+<body>
+
+  <div id='top'>
+
+    Locales:
+    <select id='locale-selector'></select>
+
+  </div>
+
+  <div id='calendar'></div>
+
+</body>
+</html>
